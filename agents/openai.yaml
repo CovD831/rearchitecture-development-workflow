@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rearchitecture Development Workflow"
+  short_description: "Build evidence-driven architecture redesign packages"
+  default_prompt: "Use this skill to plan, document, review and stage a software architecture rework before implementation."
