@@ -21,6 +21,7 @@ It is not yet claimed as a universally stable architecture-development process.
 - The real-repository pilot separated the completed Skill experiment from an
   optional feasibility experiment, a future migration MVP and final production
   promotion evidence.
+- The distribution package is released under the MIT License.
 
 ## What this evidence supports
 
@@ -51,4 +52,4 @@ Consider a stable `1.0.0` after:
 3. one real multi-session increment resumes successfully from repository state;
 4. team feedback shows that the minimum-package routing avoids excessive
    ceremony;
-5. all blocking beta findings are consumed and the public license is selected.
+5. all blocking beta findings are consumed.

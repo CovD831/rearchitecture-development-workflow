@@ -18,6 +18,7 @@ REQUIRED = (
     "references/user-decision-gates.md",
     "scripts/check_resume_fixtures.py",
     "VERSION",
+    "LICENSE",
 )
 OPERATIONAL_FILES = (
     ROOT / "SKILL.md",

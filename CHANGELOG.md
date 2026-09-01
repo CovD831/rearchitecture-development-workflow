@@ -18,6 +18,7 @@ All notable changes to this Skill are recorded here.
 - Document-coherence and over-design gates.
 - Healthy and blocked resume regression fixtures.
 - Public-beta packaging, validation, evaluation and contribution guidance.
+- MIT License for personal, team and public reuse.
 
 ### Validation
 

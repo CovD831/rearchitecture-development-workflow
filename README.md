@@ -131,7 +131,4 @@ scripts/validate_package.py      Package validation entrypoint
 
 ## License
 
-No open-source license has been selected yet. Until the repository owner adds
-one, use is limited to owner-authorized personal and team evaluation; public
-redistribution rights are not granted.
-
+Released under the [MIT License](LICENSE).
