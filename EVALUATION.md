@@ -2,7 +2,7 @@
 
 ## Release status
 
-Version `0.9.0` is suitable for owner-authorized personal and team beta testing.
+Version `0.9.1` is suitable for owner-authorized personal and team beta testing.
 It is not yet claimed as a universally stable architecture-development process.
 
 ## Evidence available as of 2026-09-01
@@ -22,6 +22,8 @@ It is not yet claimed as a universally stable architecture-development process.
   optional feasibility experiment, a future migration MVP and final production
   promotion evidence.
 - The distribution package is released under the MIT License.
+- The operational entrypoint uses progressive disclosure: the main Skill keeps
+  the workflow spine while seven references are loaded only for active concerns.
 
 ## What this evidence supports
 

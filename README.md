@@ -4,7 +4,7 @@ An evidence-driven Codex Skill for planning, reviewing and incrementally
 delivering software architecture redesigns without turning the first design
 package into a whole-system rewrite.
 
-> Status: **0.9.0 public beta**. Ready for personal and team evaluation. The
+> Status: **0.9.1 public beta**. Ready for personal and team evaluation. The
 > workflow has passed static validation, resume regressions, independent
 > cold-start review and a real-repository design-package pilot. See
 > [EVALUATION.md](EVALUATION.md) for the evidence and remaining limitations.
@@ -115,11 +115,18 @@ behavioral testing with an independent agent on a real repository.
 ## Repository layout
 
 ```text
-SKILL.md                         Core workflow and routing
-agents/openai.yaml              Codex UI metadata
-references/                     Conditional workflow details and fixtures
-scripts/check_resume_fixtures.py Resume regression check
-scripts/validate_package.py      Package validation entrypoint
+SKILL.md                                  Core workflow and module router
+agents/openai.yaml                       Codex UI metadata
+references/deliverable-matrix.md         Artifact and increment routing
+references/user-decision-gates.md        Material user decisions
+references/architecture-contracts.md     L1/L2/L3 and interface contracts
+references/document-and-complexity-gates.md Document and over-design controls
+references/adversarial-review.md         Independent review and steelman
+references/migration-and-promotion.md    Migration, experiments and promotion
+references/optional-concerns.md          Plugins, isolation and version concerns
+references/fixtures/                     Resume regression fixtures
+scripts/check_resume_fixtures.py         Resume regression check
+scripts/validate_package.py              Package validation entrypoint
 ```
 
 ## 中文说明

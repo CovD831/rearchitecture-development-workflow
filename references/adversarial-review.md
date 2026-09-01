@@ -4,6 +4,16 @@ Use this after the package has a concrete vertical slice and before publication
 or implementation handoff. Prefer a reviewer who did not write the design; if
 that is not possible, use a fresh context and record the limitation.
 
+## When to run
+
+Run the review:
+
+1. after the draft system/boundary package has a concrete vertical slice and
+   before implementation approval;
+2. after a material design change or experiment result;
+3. before publishing or merging a change that alters an authority, contract,
+   migration boundary or deployment claim.
+
 ## Adversarial questions
 
 ### Scope and complexity

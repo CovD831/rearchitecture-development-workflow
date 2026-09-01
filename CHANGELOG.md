@@ -2,6 +2,28 @@
 
 All notable changes to this Skill are recorded here.
 
+## [0.9.1] - 2026-09-01
+
+### Changed
+
+- Reduced `SKILL.md` from 429 to 247 lines while preserving one external Skill
+  entrypoint and the existing workflow semantics.
+- Added explicit on-demand routing for architecture contracts, document and
+  complexity gates, migration/promotion and optional extension concerns.
+- Moved detailed L1/L2/L3 schemas and the interface checklist into
+  `references/architecture-contracts.md`.
+- Moved document coherence and over-design checks into
+  `references/document-and-complexity-gates.md`.
+- Moved migration evidence, experiments and ADR promotion rules into
+  `references/migration-and-promotion.md`.
+- Moved plugin, version coexistence and Python isolation guidance into
+  `references/optional-concerns.md`.
+
+### Compatibility
+
+- Skill name, triggers, authorization boundaries, artifact meanings and
+  resume/review gate behavior remain unchanged.
+
 ## [0.9.0] - 2026-09-01
 
 ### Added
