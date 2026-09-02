@@ -28,6 +28,7 @@ OPERATIONAL_FILES = (
     ROOT / "SKILL.md",
     ROOT / "agents" / "openai.yaml",
     *sorted((ROOT / "references").glob("*.md")),
+    *sorted((ROOT / "references" / "fixtures").rglob("*")),
     ROOT / "scripts" / "check_resume_fixtures.py",
 )
 FORBIDDEN_PORTABILITY_MARKERS = (
@@ -110,6 +111,8 @@ def validate_text_hygiene() -> None:
 
 def validate_portability() -> None:
     for path in OPERATIONAL_FILES:
+        if not path.is_file():
+            continue
         text = path.read_text(encoding="utf-8")
         for marker in FORBIDDEN_PORTABILITY_MARKERS:
             if marker.lower() in text.lower():

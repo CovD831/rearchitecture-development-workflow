@@ -4,7 +4,7 @@ An evidence-driven Codex Skill for planning, reviewing and incrementally
 delivering software architecture redesigns without turning the first design
 package into a whole-system rewrite.
 
-> Status: **0.9.1 public beta**. Ready for personal and team evaluation. The
+> Status: **0.9.2 public beta**. Ready for personal and team evaluation. The
 > workflow has passed static validation, resume regressions, independent
 > cold-start review and a real-repository design-package pilot. See
 > [EVALUATION.md](EVALUATION.md) for the evidence and remaining limitations.
@@ -96,6 +96,9 @@ not require every workflow phase or a complete Level-3 package.
    reports it instead of silently beginning the next increment.
 5. **Scope resistance:** request an architecture package without authorizing
    implementation and verify that no runtime code, push or PR is created.
+6. **On-demand L2 detail:** ask for one L2 boundary contract and verify that the
+   agent loads and applies the 12-field interface checklist without expanding
+   the package to unrelated modules.
 
 Use the feedback template in [CONTRIBUTING.md](CONTRIBUTING.md) when reporting a
 test result.

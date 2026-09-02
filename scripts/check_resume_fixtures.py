@@ -30,13 +30,13 @@ def main() -> int:
     assert "Promotion evidence:" in healthy
     assert "non-blocking | defer" in healthy
     assert "Increment 2" in healthy
-    print("healthy: resume next increment; carry deferred EXP-2/open L2")
+    print("fixture integrity: healthy resume scenario intact")
 
     blocked = read_tree("blocked")
     assert "Status: pending" in blocked
     assert "blocking | defer" in blocked
     assert "Do not start Increment 2" in blocked
-    print("blocked: stop and report unmet prior gate")
+    print("fixture integrity: blocked resume scenario intact")
     return 0
 
 

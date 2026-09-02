@@ -2,10 +2,10 @@
 
 ## Release status
 
-Version `0.9.1` is suitable for owner-authorized personal and team beta testing.
+Version `0.9.2` is suitable for owner-authorized personal and team beta testing.
 It is not yet claimed as a universally stable architecture-development process.
 
-## Evidence available as of 2026-09-01
+## Evidence available as of 2026-09-02
 
 - The Skill package passes structural/frontmatter validation.
 - All routed Markdown references resolve.
@@ -24,6 +24,8 @@ It is not yet claimed as a universally stable architecture-development process.
 - The distribution package is released under the MIT License.
 - The operational entrypoint uses progressive disclosure: the main Skill keeps
   the workflow spine while seven references are loaded only for active concerns.
+- The resume fixture checker reports fixture integrity rather than implying that
+  it has evaluated Skill behavior.
 
 ## What this evidence supports
 
@@ -41,6 +43,8 @@ It is not yet claimed as a universally stable architecture-development process.
 - Long-term team maintenance over many real migration increments.
 - Consistent behavior when a user delegates a material decision in a live
   multi-turn evaluation.
+- Whether agents consistently load the correct reference when a detailed L2
+  contract is requested through the on-demand router.
 - The cost/benefit balance for very small repositories with almost no
   architecture documentation.
 - Runtime performance or correctness improvements in any consuming project.

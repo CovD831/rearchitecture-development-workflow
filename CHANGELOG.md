@@ -2,11 +2,20 @@
 
 All notable changes to this Skill are recorded here.
 
+## [0.9.2] - 2026-09-02
+
+### Changed
+
+- Clarified resume fixture output as fixture-integrity validation, not Skill
+  behavior validation.
+- Extended portability checks to cover checked-in resume fixtures.
+- Added an explicit beta test for on-demand L2 reference loading.
+
 ## [0.9.1] - 2026-09-01
 
 ### Changed
 
-- Reduced `SKILL.md` from 429 to 247 lines while preserving one external Skill
+- Reduced `SKILL.md` from 429 to 246 lines while preserving one external Skill
   entrypoint and the existing workflow semantics.
 - Added explicit on-demand routing for architecture contracts, document and
   complexity gates, migration/promotion and optional extension concerns.
