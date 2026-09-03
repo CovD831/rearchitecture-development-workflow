@@ -1,0 +1,8 @@
+$ python3 tools/inventory_job_row_writes.py
+job-row write sites (baseline a1b2c3d):
+  scheduler/core.py:112 submit_job         -> direct write (to migrate)
+  scheduler/core.py:187 retry_job          -> direct write (to migrate)
+  scheduler/admission.py:64 decide         -> read only
+  worker/poll.py:41 mark_finished          -> direct write (to migrate)
+  scripts/backfill_job_rows.py:22 bulk_fix -> direct write (to migrate)
+total direct writers: 4

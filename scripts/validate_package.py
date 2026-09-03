@@ -8,47 +8,22 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED = (
     "SKILL.md",
-    "agents/openai.yaml",
-    "references/adversarial-review.md",
-    "references/architecture-contracts.md",
-    "references/deliverable-matrix.md",
-    "references/document-and-complexity-gates.md",
-    "references/migration-and-promotion.md",
-    "references/optional-concerns.md",
-    "references/user-decision-gates.md",
-    "references/package-completeness.md",
-    "references/review-agent-protocol.md",
-    "references/workflow-state-machine.md",
-    "references/semantic-evidence-contract.md",
-    "references/evidence-registry.md",
-    "references/runtime-dispatch-provenance.md",
-    "references/host-dispatch-log.md",
-    "references/hooks.json.example",
-    "scripts/check_resume_fixtures.py",
-    "scripts/check_package_completeness.py",
-    "scripts/check_semantic_fixtures.py",
-    "scripts/create_review_request.py",
-    "scripts/init_package_manifest.py",
-    "scripts/finalize_dispatch_receipt.py",
     "VERSION",
     "LICENSE",
-)
-OPERATIONAL_FILES = (
-    ROOT / "SKILL.md",
-    ROOT / "agents" / "openai.yaml",
-    *sorted((ROOT / "references").glob("*.md")),
-    *sorted((ROOT / "references" / "fixtures").rglob("*")),
-    ROOT / "scripts" / "check_resume_fixtures.py",
-    ROOT / "scripts" / "check_package_completeness.py",
-    ROOT / "scripts" / "check_semantic_fixtures.py",
-    ROOT / "scripts" / "create_review_request.py",
-    ROOT / "scripts" / "init_package_manifest.py",
-    ROOT / "scripts" / "host_dispatch_hook.py",
-    ROOT / "scripts" / "finalize_dispatch_receipt.py",
+    "README.md",
+    "CHANGELOG.md",
+    "agents/openai.yaml",
+    "references/contracts.md",
+    "references/review.md",
+    "references/user-decision-gates.md",
+    "references/delivery.md",
+    "references/doc-gates.md",
+    "references/optional-concerns.md",
+    "scripts/init_package.py",
+    "scripts/check_package.py",
 )
 FORBIDDEN_PORTABILITY_MARKERS = (
     "/Users/",
@@ -104,6 +79,8 @@ def validate_version() -> None:
 def validate_markdown_links() -> None:
     missing: list[str] = []
     for markdown in sorted(ROOT.rglob("*.md")):
+        if ".git" in markdown.parts:
+            continue
         text = markdown.read_text(encoding="utf-8")
         for raw_target in re.findall(r"(?<!!)\[[^\]]*\]\(([^)]+)\)", text):
             target = raw_target.strip().split("#", 1)[0]
@@ -129,24 +106,21 @@ def validate_text_hygiene() -> None:
 
 
 def validate_portability() -> None:
-    for path in OPERATIONAL_FILES:
-        if not path.is_file():
-            continue
+    operational = [ROOT / "SKILL.md", *sorted((ROOT / "references").glob("*.md")), *sorted((ROOT / "scripts").glob("*.py"))]
+    for path in operational:
+        if path.name == "validate_package.py":
+            continue  # contains the marker literals themselves
         text = path.read_text(encoding="utf-8")
         for marker in FORBIDDEN_PORTABILITY_MARKERS:
             if marker.lower() in text.lower():
                 fail(f"project-specific marker {marker!r} in {path.relative_to(ROOT)}")
 
 
-def validate_python() -> None:
+def validate_scripts_and_fixture() -> None:
     for script in sorted((ROOT / "scripts").glob("*.py")):
         compile(script.read_text(encoding="utf-8"), str(script), "exec")
     subprocess.run(
-        [sys.executable, str(ROOT / "scripts" / "check_resume_fixtures.py")],
-        check=True,
-    )
-    subprocess.run(
-        [sys.executable, str(ROOT / "scripts" / "check_semantic_fixtures.py")],
+        [sys.executable, str(ROOT / "scripts" / "check_package.py"), str(ROOT / "fixtures" / "example-package")],
         check=True,
     )
 
@@ -159,7 +133,7 @@ def main() -> int:
     validate_markdown_links()
     validate_text_hygiene()
     validate_portability()
-    validate_python()
+    validate_scripts_and_fixture()
     print("Skill package validation: OK")
     return 0
 

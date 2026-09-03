@@ -1,0 +1,20 @@
+[
+  {
+    "finding_id": "AR-001",
+    "severity": "blocking",
+    "decision": "accepted",
+    "consumer": {"path": "03-current-to-target-map.md", "anchor": "bulk command"},
+    "owner": "runtime-team",
+    "evidence": "evidence/dependency-inventory.txt",
+    "status": "closed"
+  },
+  {
+    "finding_id": "AR-002",
+    "severity": "non-blocking",
+    "decision": "deferred",
+    "consumer": {"path": "06-handoff.md", "anchor": "S2"},
+    "owner": "runtime-team",
+    "evidence": "",
+    "status": "open"
+  }
+]

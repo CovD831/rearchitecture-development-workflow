@@ -1,7 +1,0 @@
-{
-  "description": "Record independent reviewer lifecycle events for rearchitecture packages.",
-  "hooks": {
-    "SubagentStart": [{"hooks": [{"type": "command", "command": "python3 /absolute/path/to/rearchitecture-development-workflow/scripts/host_dispatch_hook.py", "timeout": 10, "statusMessage": "Recording reviewer dispatch"}]}],
-    "SubagentStop": [{"hooks": [{"type": "command", "command": "python3 /absolute/path/to/rearchitecture-development-workflow/scripts/host_dispatch_hook.py", "timeout": 10, "statusMessage": "Recording reviewer completion"}]}]
-  }
-}

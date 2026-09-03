@@ -1,0 +1,27 @@
+{
+  "package_id": "R-001",
+  "input_revision": "a1b2c3d",
+  "reviewer": "reviewer-subagent-1",
+  "findings": [
+    {
+      "id": "AR-001",
+      "statement": "The write boundary claims sole-writer authority but the mapping keeps the backfill script writing job rows directly, so durability has two writers during migration.",
+      "severity": "blocking",
+      "evidence_refs": ["03-current-to-target-map.md"],
+      "recommendation": "Route backfill through the store bulk command before claiming sole-writer parity."
+    },
+    {
+      "id": "AR-002",
+      "statement": "Receipt replay semantics are conditional but no experiment bounds them.",
+      "severity": "non-blocking",
+      "evidence_refs": [],
+      "recommendation": "Name the receipt-replay experiment in slice S2."
+    }
+  ],
+  "steelman": {
+    "strongest_support": "One writable owner makes the job-state invariant enforceable by construction instead of by convention across four call sites.",
+    "strongest_opposition": "The store adds a formality layer before any real second consumer exists.",
+    "decision_refs": ["05-adr.md"]
+  },
+  "overall": "blocked"
+}

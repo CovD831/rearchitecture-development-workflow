@@ -1,0 +1,21 @@
+{
+  "package_id": "R-001",
+  "size": "design",
+  "baseline_revision": "a1b2c3d",
+  "current_revision": "a1b2c3d",
+  "documents": {
+    "scope": "00-scope.md",
+    "positioning": "01-positioning.md",
+    "l1": "02-l1-target.md",
+    "mapping": "03-current-to-target-map.md",
+    "l2": ["04-l2-contracts.md"],
+    "adr": ["05-adr.md"],
+    "handoff": "06-handoff.md",
+    "review_report": "review-report.json",
+    "review_ledger": "review-ledger.json"
+  },
+  "review": {"status": "consumed", "reviewer": "reviewer-subagent-1"},
+  "next_task": {"id": "S1-write-boundary", "owner": "runtime-team"},
+  "advancement_trigger": "write-boundary parity tests pass on legacy and target paths",
+  "stop_rule": "stop and preserve the current path if the write boundary cannot be frozen without breaking the scheduling authority"
+}
