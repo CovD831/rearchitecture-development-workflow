@@ -22,8 +22,11 @@ directory; chat prose is not the record.
    manifest and latest increment record before defining new scope. If the
    recorded advancement trigger is unmet or a blocking finding is open,
    present the state and options to the user instead of starting the next
-   increment. Record the exact baseline revision and what is implemented,
-   target intent, or unknown.
+   increment — unless the user has already delegated the resume choice, in
+   which case repair first (the recommended default), record the delegation,
+   and continue. Note that a `blocked` package can still pass the checker
+   structurally; the resume gate is what stops it. Record the exact baseline
+   revision and what is implemented, target intent, or unknown.
 2. **Frame.** Record the user and the problem caused by current coupling, the
    first deployment boundary, non-goals, and a delivery horizon: what this
    increment delivers, what it explicitly defers, and the trigger and
@@ -48,19 +51,22 @@ directory; chat prose is not the record.
    adversarial pass plus one steelman in the same cycle. Persist the report
    and consume every finding into the ledger. Load
    [`references/review.md`](references/review.md).
-7. **Hand off.** Run `scripts/check_package.py <package-dir>` and fix every
-   reported failure. Record the outcome (continue / run a named experiment /
+7. **Hand off.** Run the skill's
+   `scripts/check_package.py <package-dir>` and fix every reported failure. Record the outcome (continue / run a named experiment /
    revise the target / stop and preserve), the exact next task and owner, and
    make the increment record discoverable from the project's orientation or
    catalog page. Never push or open a PR without explicit user authorization.
 
 ## Package sizes
 
-| Size | Runs the loop through | Checker requires |
+| Size | Scope of work | Checker requires |
 |---|---|---|
-| `orientation` | step 2 | scope, next task, trigger |
-| `design` | step 6 | scope, positioning, L1, mapping, L2, ADR, handoff, consumed review |
-| `implementation` | steps 5–7 | design set plus L3, fixtures, acceptance, rollback |
+| `orientation` | steps 1–2 | scope, next task, trigger |
+| `design` | steps 1–7, documentation only | scope, positioning, L1, mapping, L2, ADR, handoff, consumed review |
+| `implementation` | steps 1–7 plus authorized code | design set plus L3, fixtures, acceptance, rollback |
+
+An `implementation` package continuing an existing program may link to that
+program's design documents instead of copying them.
 
 A `design` package ends in a recommendation — implementation-candidate,
 experiment, revise, or blocked — never in implementation authorization.
@@ -80,6 +86,7 @@ keep `.rearchitecture-package.json` current:
   "package_id": "R-001",
   "size": "design",
   "baseline_revision": "<revision>",
+  "current_revision": "<revision>",
   "documents": {
     "scope": "00-scope.md",
     "positioning": "01-positioning.md",
@@ -91,7 +98,7 @@ keep `.rearchitecture-package.json` current:
     "review_report": "review-report.json",
     "review_ledger": "review-ledger.json"
   },
-  "review": {"status": "pending", "reviewer": ""},
+  "review": {"status": "consumed", "reviewer": "<sub-agent id>"},
   "next_task": {"id": "S1", "owner": ""},
   "advancement_trigger": "<observable condition>",
   "stop_rule": "<abort / rollback / revise condition>"
@@ -100,7 +107,9 @@ keep `.rearchitecture-package.json` current:
 
 Gate state is derived, not declared: the checker infers it from which files
 exist and whether every finding is consumed. Never hand-edit a status to make
-a gate look passed; the checker does not read prose claims.
+a gate look passed; the checker does not read prose claims. Map
+`review_report` and `review_ledger` only once those files exist — a declared
+mapping must exist on disk.
 
 ## Hard gates
 

@@ -14,8 +14,8 @@ from pathlib import Path
 
 SIZES = {
     "orientation": ("scope",),
-    "design": ("scope", "positioning", "l1", "mapping", "l2", "adr", "handoff", "review_report", "review_ledger"),
-    "implementation": ("scope", "positioning", "l1", "mapping", "l2", "adr", "handoff", "l3", "fixtures", "acceptance", "rollback", "review_report", "review_ledger"),
+    "design": ("scope", "positioning", "l1", "mapping", "l2", "adr", "handoff"),
+    "implementation": ("scope", "positioning", "l1", "mapping", "l2", "adr", "handoff", "l3", "fixtures", "acceptance", "rollback"),
 }
 REVIEW_STATUSES = {"pending", "consumed", "blocked"}
 SEVERITIES = {"blocking", "non-blocking"}
@@ -79,7 +79,7 @@ def check(package: Path) -> list[str]:
         documents = {}
     report: dict = {}
     ledger: list = []
-    for key in SIZES.get(size, ()):
+    for key in dict.fromkeys((*SIZES.get(size, ()), *documents.keys())):
         values = documents.get(key)
         values = values if isinstance(values, list) else [values]
         if any(not isinstance(item, str) or not item.strip() for item in values):
@@ -115,8 +115,13 @@ def check(package: Path) -> list[str]:
     review = data.get("review")
     if not isinstance(review, dict) or review.get("status") not in REVIEW_STATUSES:
         errors.append("review.status must be pending, consumed or blocked")
-    elif size != "orientation" and review.get("status") in {"consumed", "blocked"}:
-        errors.extend(check_review(package, report, ledger, consumed=review.get("status") == "consumed"))
+    else:
+        status = review.get("status")
+        if size != "orientation" and status in {"consumed", "blocked"}:
+            for key in ("review_report", "review_ledger"):
+                if not documents.get(key):
+                    errors.append(f"review.status={status} requires a {key} mapping")
+            errors.extend(check_review(package, report, ledger, consumed=status == "consumed"))
 
     next_task = data.get("next_task")
     if not isinstance(next_task, dict) or not next_task.get("id") or not next_task.get("owner"):
@@ -209,7 +214,11 @@ def main() -> int:
         for error in dict.fromkeys(errors):
             print(f"- {error}", file=sys.stderr)
         return 1
-    print("Package check: OK")
+    try:
+        blocked = json.loads((package / ".rearchitecture-package.json").read_text(encoding="utf-8")).get("review", {}).get("status") == "blocked"
+    except (OSError, json.JSONDecodeError):
+        blocked = False
+    print("Package check: OK (blocked — the resume gate applies)" if blocked else "Package check: OK")
     return 0
 
 

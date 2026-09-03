@@ -15,8 +15,6 @@ BASE_DOCS = {
     "l2": ["04-l2-contracts.md"],
     "adr": ["05-adr.md"],
     "handoff": "06-handoff.md",
-    "review_report": "review-report.json",
-    "review_ledger": "review-ledger.json",
 }
 IMPLEMENTATION_DOCS = {
     "l3": "07-l3-task-contract.md",

@@ -22,7 +22,9 @@ unreviewed self-review is what this step exists to prevent.
 One cycle = one adversarial pass plus one steelman, run together. Budget: one
 cycle by default; one closure cycle is allowed only when blocking findings
 were actually fixed and the input revision changed; anything more requires an
-explicit user approval recorded in the increment record.
+explicit user approval recorded in the increment record. If no independent
+reviewer can be dispatched at all, leave `review.status: pending`, do not
+self-review in place of the reviewer, and say so at the handoff.
 
 A blocking finding keeps the handoff gate closed until the underlying risk is
 resolved with evidence, or the user or an independent reviewer explicitly
@@ -74,6 +76,9 @@ or deferring a blocking finding alone never opens the gate.
 
 ## Report format (`review_report`)
 
+The report must contain at least one finding; a review that finds nothing to
+say has not looked.
+
 ```json
 {
   "package_id": "R-001",
@@ -106,8 +111,9 @@ the report — it is derived from the ledger after consumption.
 
 - `decision`: `accepted`, `rejected`, `deferred` or `exception`.
 - `consumer`: the artifact that absorbs the finding; `anchor` must be text
-  that actually appears in that file. A finding with no consumer artifact is
-  not consumed.
+  that actually appears in that file, on a single line (the checker does a
+  plain substring match). A finding with no consumer artifact is not
+  consumed.
 - `evidence`: a repository path (optionally `::symbol` or `#anchor`) that
   exists; required for `accepted` blocking findings.
 - `exception` requires an `approver` field naming the user or independent
