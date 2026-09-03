@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.31.1] - 2026-09-04
+
+Applied findings from the first real-repository run (R005 on AutoResearch, the
+first package produced by 0.31.0 and compared against a 0.30-era package).
+
+### Added
+
+- SKILL.md step 1 defines `repair` (reconcile existing records with evidence
+  that already exists; never new design, code, or rewritten gate state) and a
+  read-only rule for legacy packages (pre-0.31 `profile`/`gates` manifests:
+  read, link, repair ledgers, never rewrite — drift is backlog).
+- review.md names the self-attestation risk: a blocking finding closed only
+  by amending package documentation prefers underlying code/test evidence, or
+  `"resolution_review": "third-party"` surfaced at handoff.
+- The closure-cycle decision (spent/not spent, why) is recorded in the
+  increment record.
+- Package location guidance: create packages where the project keeps
+  rearchitecture records (e.g. `docs/rearchitecture/<package-id>/`).
+
+### Changed
+
+- `check_package.py` detects legacy-schema manifests and skips with an
+  explicit message instead of failing with misleading current-schema errors.
+- Consumer-anchor matching collapses whitespace, so an anchor may span a
+  wrapped line (the R005 run hit this twice).
+
 ## [0.31.0] - 2026-09-03
 
 Minimal-closed-loop refactor. The 0.30.x machinery grew one layer per observed

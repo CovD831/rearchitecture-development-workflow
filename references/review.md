@@ -22,9 +22,10 @@ unreviewed self-review is what this step exists to prevent.
 One cycle = one adversarial pass plus one steelman, run together. Budget: one
 cycle by default; one closure cycle is allowed only when blocking findings
 were actually fixed and the input revision changed; anything more requires an
-explicit user approval recorded in the increment record. If no independent
-reviewer can be dispatched at all, leave `review.status: pending`, do not
-self-review in place of the reviewer, and say so at the handoff.
+explicit user approval recorded in the increment record. Record the cycle
+decision — spent or not spent, and why — in the increment record. If no
+independent reviewer can be dispatched at all, leave `review.status: pending`,
+do not self-review in place of the reviewer, and say so at the handoff.
 
 A blocking finding keeps the handoff gate closed until the underlying risk is
 resolved with evidence, or the user or an independent reviewer explicitly
@@ -121,6 +122,14 @@ the report — it is derived from the ledger after consumption.
 - `status`: `open` or `closed`. Blocking findings must be `closed` before
   handoff; non-blocking findings may stay `open` only with an owner and a
   named trigger.
+
+Consumption is performed by the package author, who is an interested party.
+When a blocking finding is closed only by amending package documentation,
+prefer citing the underlying code or test fact as `evidence`; when the
+amendment itself is the only evidence available, set
+`"resolution_review": "third-party"` on the ledger entry and surface it as a
+residual risk at handoff, so an independent reviewer can re-check it before
+implementation.
 
 The checker verifies mechanically: report and ledger finding IDs match
 exactly, every entry is complete, anchors and evidence paths exist, and no

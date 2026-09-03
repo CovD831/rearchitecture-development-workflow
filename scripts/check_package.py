@@ -65,6 +65,17 @@ def check(package: Path) -> list[str]:
     except (OSError, json.JSONDecodeError) as exc:
         return [f"invalid manifest: {exc}"]
 
+    if "profile" in data and "size" not in data:
+        # Pre-0.31 schema: a legacy record, not a current package. Never gate
+        # on it and never rewrite it; drift is backlog (SKILL.md step 1).
+        print(
+            "Legacy manifest schema (profile/gates) detected: this checker "
+            "validates current-schema packages only. Read and link legacy "
+            "packages, repair their ledgers when evidence exists, and record "
+            "structural drift as backlog."
+        )
+        raise SystemExit(0)
+
     size = data.get("size")
     if size not in SIZES:
         errors.append("size must be orientation, design or implementation")
@@ -186,8 +197,13 @@ def check_review(package: Path, report: dict, ledger: list, consumed: bool) -> l
             target = contained(package, str(consumer["path"]))
             if target is None or not target.is_file():
                 errors.append(f"consumer path does not exist: {finding_id}")
-            elif not str(consumer.get("anchor", "")).lower() in target.read_text(encoding="utf-8").lower():
-                errors.append(f"consumer anchor not found in {consumer['path']}: {finding_id}")
+            else:
+                # collapse whitespace on both sides so a single-line anchor
+                # still matches prose wrapped across lines
+                haystack = " ".join(target.read_text(encoding="utf-8").lower().split())
+                needle = " ".join(str(consumer.get("anchor", "")).lower().split())
+                if needle not in haystack:
+                    errors.append(f"consumer anchor not found in {consumer['path']}: {finding_id}")
         if entry.get("decision") == "exception" and not str(entry.get("approver", "")).strip():
             errors.append(f"exception lacks approver: {finding_id}")
         evidence = str(entry.get("evidence", "")).strip()

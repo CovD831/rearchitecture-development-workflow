@@ -24,9 +24,17 @@ directory; chat prose is not the record.
    present the state and options to the user instead of starting the next
    increment — unless the user has already delegated the resume choice, in
    which case repair first (the recommended default), record the delegation,
-   and continue. Note that a `blocked` package can still pass the checker
-   structurally; the resume gate is what stops it. Record the exact baseline
-   revision and what is implemented, target intent, or unknown.
+   and continue. Repair means reconciling existing records — ledgers,
+   catalogs, increment records — with evidence that already exists in the
+   repository; it never authorizes new design, runtime code, or rewriting a
+   historical manifest's gate state. Packages written by older versions of
+   this skill (manifests with `profile`/`gates` fields and no `size`) are
+   legacy records: read and link them, repair their ledgers when evidence
+   exists, but do not rewrite their manifests to satisfy the current checker;
+   record structural drift as backlog. Note that a `blocked` package can
+   still pass the checker structurally; the resume gate is what stops it.
+   Record the exact baseline revision and what is implemented, target intent,
+   or unknown.
 2. **Frame.** Record the user and the problem caused by current coupling, the
    first deployment boundary, non-goals, and a delivery horizon: what this
    increment delivers, what it explicitly defers, and the trigger and
@@ -77,7 +85,9 @@ material user decision.
 
 ## Manifest
 
-Initialize the package with
+Initialize the package where the project keeps its rearchitecture records —
+for example `docs/rearchitecture/<package-id>/`, or beside the project's
+architecture docs if no dedicated directory exists — with
 `scripts/init_package.py <dir> <size> <package-id> <baseline-revision>` and
 keep `.rearchitecture-package.json` current:
 
