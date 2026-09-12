@@ -1,5 +1,40 @@
 # Changelog
 
+## [0.31.2] - 2026-09-12
+
+Applied findings from a promotion-closure run (R-004 on Cochpia). The gate was
+recorded as 12/12 while two of its cases could no longer pass, and three
+documents asserted states that had stopped being true.
+
+### Added
+
+- `references/doc-gates.md`: a **Claim drift** section. Documents rot through
+  claims that carry an implicit "still true" — counts, file lists, "remains
+  unchanged", "already implemented". Gives the falsification walk to run before
+  a handoff, and the correction pattern: keep the history, add a dated banner
+  and an explicit update section, never silently rewrite the old text.
+- `references/review.md`: three adversarial questions — which claimed
+  verifications the project's default regression actually executes; which other
+  sites share the shape of a defect just fixed; whether a check makes itself
+  pass by widening its own scope.
+- `references/contracts.md`: **boundary vocabulary and legacy records**. Name
+  both sides' terms for the same concept and the single place they are
+  normalised; state explicitly whether pre-existing records stay readable under
+  a compatibility default or are backfilled, because "hide the untagged" is
+  indistinguishable from a data-loss change until it is too late.
+
+### Changed
+
+- `references/contracts.md`: added a `Vocabulary` row to the interface contract
+  checklist, and a vocabulary-ownership bullet to the L2 artifact list.
+- `SKILL.md`: two entries in **Do not**.
+
+### Not added
+
+- No new hard gate. "Evidence must be reproducible by someone else" was the
+  natural blocker to add, but the checker cannot re-run a project's tests, so by
+  this skill's own rule it stays a reviewer question rather than a mechanism.
+
 ## [0.31.1] - 2026-09-04
 
 Applied findings from the first real-repository run (R005 on AutoResearch, the

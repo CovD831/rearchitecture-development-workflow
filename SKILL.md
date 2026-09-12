@@ -154,5 +154,9 @@ mapping must exist on disk.
 - hide mixed responsibilities behind a renamed pass-through wrapper;
 - claim decoupling from a lower dependency count alone;
 - use a synthetic demo as the primary MVP exit condition;
+- treat an acceptance command the project's default regression never runs as a
+  gate — it is a document that will rot at the first structural change;
+- restate a state (a count, a status, "remains unchanged") that this run did
+  not re-measure;
 - treat task notes, benchmark scores or generated prose as architecture
   authority.

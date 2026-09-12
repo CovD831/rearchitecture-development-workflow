@@ -66,6 +66,24 @@ or deferring a blocking finding alone never opens the gate.
   than only "it runs"?
 - Does a lower dependency count actually remove concrete coupling?
 - Are performance claims tied to equivalent workloads and a stated baseline?
+- Which claimed verifications are actually executed by the project's default
+  regression command? An acceptance matrix that has only ever been run by hand
+  is a document, not a gate. Its failure mode is specific and quiet: after a
+  structural change its assertions still pin the pre-change contract, so it
+  fails for a reason that has nothing to do with the code. Real instance
+  (2026-09-12): two gate cases asserted that a route deleted by an earlier
+  refactor still existed, and because that harness was not part of the default
+  test run, nobody learned about it for days.
+- After fixing one instance of a defect, which other sites share its shape?
+  Ask it before closing the finding, not after the next occurrence. Usual
+  answers: a guard that asks a global question in a scoped context, a constant
+  copied into three files, the same hand-kept list in a second harness.
+- Does any check make itself pass by widening its own scope — a broader input, a
+  fallback path, a namespace it was never meant to see? Compare a fix that
+  turns the check green against one that makes the underlying condition true.
+  The dangerous direction is specific: widening a namespace to satisfy a lookup
+  can make an isolated run silently read and write production data and then
+  report success.
 
 ## Steelman prompts
 

@@ -28,6 +28,38 @@ canonical claim owner per document; summaries shorter than their sources;
 status, owner and supersession visible; relative links validated before
 publication.
 
+## Claim drift
+
+Documents rot in one specific way: a claim that something exists, does not
+exist, or is in a certain state stays readable after the change that made it
+false. Three instances from one real run (2026-09-12, all three discovered in a
+single afternoon):
+
+- a handoff page still said the work was uncommitted after it had been pushed;
+- a gate-definition document still listed a route as preserved after the route
+  had been deleted;
+- a readiness table still said the auth posture was "decided and implemented"
+  while the running configuration had that feature switched off.
+
+Before closing a step or a handoff, walk the package and ask of every claim
+that asserts a fact about the system, the process or a gate:
+
+- What change would falsify this claim?
+- Did this increment make one of those changes?
+
+A claim carrying an implicit "still true" is the one that rots. Counts, file
+lists, "remains unchanged", "already implemented" and status words are the usual
+carriers — a number in a table is a claim, not decoration.
+
+Correct by preserving the record, not rewriting it: keep the historical text,
+add a dated status banner at the top, and add an explicit update section naming
+what is no longer true. Silently editing the old text destroys the evidence that
+drift happened, which is the part a reader needs to trust the rest. This is the
+same principle as never rewriting a historical manifest's gate state.
+
+Never restate a state you have not re-measured in this run. "Should still be
+true" is not evidence; when re-measuring is cheap, re-measure.
+
 ## Over-design gate
 
 - Does every new abstraction have a real consumer or safety requirement?

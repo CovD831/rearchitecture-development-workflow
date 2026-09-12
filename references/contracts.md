@@ -38,6 +38,8 @@ consumes. State:
 - allowed calls and visible data;
 - lifecycle and failure containment;
 - compatibility and migration notes;
+- vocabulary ownership: which side owns each status/enum term and where the
+  two sides are normalised;
 - decisions deferred to implementation.
 
 Mark significant claims as **established**, **conditional** or **open**. An
@@ -48,6 +50,23 @@ Use a small interaction vocabulary. Every cross-boundary interaction
 identifies itself as a command, immutable query/view, typed transfer or
 receipt/evidence. Do not introduce a generic bus to avoid naming the writer or
 authority.
+
+## Boundary vocabulary and legacy records
+
+Two boundary facts that review keeps rediscovering:
+
+- **Vocabulary.** When each side owns its own terms for the same concept, the
+  adapter must normalise at the boundary. Passing a value through because it
+  "looks like a status" either throws inside the receiver or stores an
+  out-of-domain value. Name both vocabularies in the L2 artifact and the single
+  place they are translated; a receiver that validates its domain and throws is
+  the good outcome, the silent store is the bad one.
+- **Legacy records.** A new rule that treats missing metadata as
+  "different, therefore hidden" deletes history. State the intended behaviour of
+  pre-existing records explicitly, and say which of the two the package does:
+  keep them readable under a compatibility default, or carry a backfill. Never
+  leave it implicit, because "hide the untagged" is indistinguishable from a
+  data-loss change until someone notices their own records are gone.
 
 ## Level 3 — task-local implementation contract
 
@@ -80,4 +99,5 @@ implementation task, not in the package.
 | Recovery | What happens after restart or unknown external outcome? |
 | Version | Which contract/config/durable versions must match? |
 | Compatibility | What legacy path remains and when may it be removed? |
+| Vocabulary | Do both sides mean the same thing by each status or enum, and where is it normalised? |
 | Evidence | Which test or measurement proves the claim? |
